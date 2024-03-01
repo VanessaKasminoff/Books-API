@@ -1,6 +1,7 @@
 //dependencies
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 //config
 require('dotenv').config()
@@ -16,6 +17,7 @@ mongoose.connect(MONGO_URI)
 
 //middleware
 app.use(express.urlencoded({extended: true}))
+app.use(cors())
 
 //import books controller
 const booksController = require('./controllers/books_controllers.js')
@@ -28,5 +30,5 @@ app.get('/', (req, res) => {
 
 //listen
 app.listen(PORT, () => {
-    console.log(`Server running on port: ${PORT}`)
+    console.log(`CORS-enabled server running on port: ${PORT}`)
 })
