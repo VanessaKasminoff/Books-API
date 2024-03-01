@@ -1,0 +1,31 @@
+//dependencies
+const express = require('express')
+const mongoose = require('mongoose')
+
+//config
+require('dotenv').config()
+const PORT = process.env.PORT
+const MONGO_URI = process.env.MONGO_URI
+const app = express()
+
+//db connection
+mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
+    console.log(`Connected to mongo: ${MONGO_URI}`)
+})
+
+//middleware
+app.use(express.urlencoded({extended: true}))
+
+//import books controller
+const booksController = require('./controllers/books_controllers.js')
+app.use('/books', booksController)
+
+//routes
+app.get('/', (req, res) => {
+    res.send('Welcome to the most amazing Books API!')
+})
+
+//listen
+app.listen(PORT, () => {
+    console.log(`Server running on port: ${PORT}`)
+})
